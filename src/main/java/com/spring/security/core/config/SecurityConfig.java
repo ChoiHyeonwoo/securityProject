@@ -1,9 +1,11 @@
 package com.spring.security.core.config;
 
 import com.spring.security.core.provider.CustomAuthenticationProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,6 +18,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private AuthenticationDetailsSource authenticationDetailsSource;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
@@ -53,6 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/login_proc")       // login.html의 로그인 처리 url과 동일하게
+                .authenticationDetailsSource(authenticationDetailsSource)   // custom parameter 추가.
                 .defaultSuccessUrl("/")
                 .permitAll();
 
