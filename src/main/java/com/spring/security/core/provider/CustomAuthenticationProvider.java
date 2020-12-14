@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
@@ -21,6 +22,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     private PasswordEncoder passwordEncoder;
 
     @Override
+    @Transactional
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
         String username = authentication.getName();
@@ -28,7 +30,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         AccountContext accountContext = (AccountContext) userDetailsService.loadUserByUsername(username);
 
-        if (!passwordEncoder.matches(credential, accountContext.getAccount().getPassword())) {
+        if (!passwordEncoder.matches(credential, accountContext.getPassword())) {
             throw new BadCredentialsException("BadCredentialException");
         }
 
@@ -39,11 +41,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             throw new InsufficientAuthenticationException("InsufficientAuthenticationException");
 
         return new UsernamePasswordAuthenticationToken
-                (accountContext.getAccount(), null, authentication.getAuthorities());
+                (accountContext.getAccount(), null, accountContext.getAuthorities());
     }
 
     @Override
     public boolean supports(Class<?> authentication) {
-        return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);
+        return authentication.equals(UsernamePasswordAuthenticationToken.class);
     }
 }
