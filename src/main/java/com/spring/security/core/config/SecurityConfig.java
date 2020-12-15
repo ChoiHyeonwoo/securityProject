@@ -32,11 +32,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private FormAuthenticationDetailsSource authenticationDetailsSource;
 
-    @Autowired
+    /*@Autowired
     private AuthenticationSuccessHandler authenticationSuccessHandler;
 
     @Autowired
-    private AuthenticationFailureHandler authenticationFailureHandler;
+    private AuthenticationFailureHandler authenticationFailureHandler;*/
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
@@ -84,8 +84,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/login_proc")       // login.html의 로그인 처리 url과 동일하게
                 .authenticationDetailsSource(authenticationDetailsSource)   // custom parameter 추가.
                 .defaultSuccessUrl("/")
-                .successHandler(authenticationSuccessHandler)   // custom login Success Handler
-                .failureHandler(authenticationFailureHandler)   // custom login Failure Handler
+                /*.successHandler(authenticationSuccessHandler)   // custom login Success Handler
+                .failureHandler(authenticationFailureHandler)   // custom login Failure Handler*/
                 .permitAll()
         .and()
                 .exceptionHandling()
