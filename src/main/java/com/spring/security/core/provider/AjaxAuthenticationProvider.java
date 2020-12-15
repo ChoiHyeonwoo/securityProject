@@ -1,17 +1,17 @@
 package com.spring.security.core.provider;
 
 import com.spring.security.core.service.AccountContext;
+import com.spring.security.core.token.AjaxAuthenticationToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
-public class CustomAuthenticationProvider implements AuthenticationProvider {
+public class AjaxAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -31,19 +31,19 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         if (!passwordEncoder.matches(credential, accountContext.getPassword())) {
             throw new BadCredentialsException("BadCredentialException");
         }
+        /*
+        FormWebAuthenticationDetails formWebAuthenticationDetails = (FormWebAuthenticationDetails) authentication.getDetails();
+        String secretKey = formWebAuthenticationDetails.getSecretKey();
 
-//        FormWebAuthenticationDetails formWebAuthenticationDetails = (FormWebAuthenticationDetails) authentication.getDetails();
-//        String secretKey = formWebAuthenticationDetails.getSecretKey();
-//
-//        if (secretKey == null || !"secret".equals(secretKey))
-//            throw new InsufficientAuthenticationException("InsufficientAuthenticationException");
+        if (secretKey == null || !"secret".equals(secretKey))
+            throw new InsufficientAuthenticationException("InsufficientAuthenticationException");*/
 
-        return new UsernamePasswordAuthenticationToken
+        return new AjaxAuthenticationToken
                 (accountContext.getAccount(), null, accountContext.getAuthorities());
     }
 
     @Override
     public boolean supports(Class<?> authentication) {
-        return authentication.equals(UsernamePasswordAuthenticationToken.class);
+        return authentication.equals(AjaxAuthenticationToken.class);
     }
 }
