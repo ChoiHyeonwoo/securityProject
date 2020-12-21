@@ -1,6 +1,6 @@
 package com.spring.security.core.service;
 
-import com.spring.security.domain.Account;
+import com.spring.security.domain.entity.Account;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
