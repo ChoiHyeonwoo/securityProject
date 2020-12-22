@@ -1,6 +1,7 @@
 package com.spring.security.core.metadatasource;
 
 import com.spring.security.service.SecurityResourceService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
@@ -9,7 +10,9 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
+@Slf4j
 public class UrlFilterInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
+
     private LinkedHashMap<RequestMatcher, List<ConfigAttribute>> requestMap ;
 
     private SecurityResourceService securityResourceService;

@@ -7,9 +7,8 @@ import org.springframework.security.access.intercept.AbstractSecurityInterceptor
 import org.springframework.security.access.intercept.InterceptorStatusToken;
 import org.springframework.security.access.method.MethodSecurityMetadataSource;
 
-public class CustomMethodSecurityInterceptor  extends AbstractSecurityInterceptor implements
+public class CustomMethodSecurityInterceptor extends AbstractSecurityInterceptor implements
         MethodInterceptor {
-
     private MethodSecurityMetadataSource securityMetadataSource;
 
     public Class<?> getSecureObjectClass() {
