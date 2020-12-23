@@ -86,7 +86,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .accessDeniedPage("/denied")
                 .accessDeniedHandler(accessDeniedHandler())
         .and()
-                .addFilterAt(customFilterSecurityInterceptor(), FilterSecurityInterceptor.class);
+                .addFilterAt(customFilterSecurityInterceptor(), FilterSecurityInterceptor.class);  // 기존필터보다 먼저 실행.
 
         http.csrf().disable();
     }
@@ -111,8 +111,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public PermitAllFilter customFilterSecurityInterceptor() throws Exception {
 
         PermitAllFilter permitAllFilter = new PermitAllFilter(permitAllResources);
-        permitAllFilter.setSecurityMetadataSource(urlFilterInvocationSecurityMetadataSource());
-        permitAllFilter.setAccessDecisionManager(affirmativeBased());
+        permitAllFilter.setSecurityMetadataSource(urlFilterInvocationSecurityMetadataSource()); // URL Filter 적용.
+        permitAllFilter.setAccessDecisionManager(affirmativeBased()); // 1개만 통과되도 통과되는 방식.
         permitAllFilter.setAuthenticationManager(authenticationManagerBean());
         return permitAllFilter;
     }
@@ -151,7 +151,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
         return roleHierarchy;
     }
-
+    // 권한정보 처리하는
     @Bean
     public UrlFilterInvocationSecurityMetadataSource urlFilterInvocationSecurityMetadataSource() throws Exception {
         return new UrlFilterInvocationSecurityMetadataSource(urlResourcesMapFactoryBean().getObject(), securityResourceService);

@@ -9,11 +9,11 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
-
+//권한을 DB에서 가져와 처리.
 @Slf4j
 public class UrlFilterInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
-
-    private LinkedHashMap<RequestMatcher, List<ConfigAttribute>> requestMap ;
+    // RequestMap의 역할.
+    private LinkedHashMap<RequestMatcher, List<ConfigAttribute>> requestMap;
 
     private SecurityResourceService securityResourceService;
 
@@ -22,23 +22,24 @@ public class UrlFilterInvocationSecurityMetadataSource implements FilterInvocati
         this.securityResourceService = securityResourceService;
     }
 
+    // Object형 파라미터는 FilterInvocation형으로 전달됨.
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
 
-        HttpServletRequest request = ((FilterInvocation) object).getRequest();
+        HttpServletRequest request = ((FilterInvocation) object).getRequest();  // 사용자가 요청한 URL을 가져옴.
 
         if(requestMap != null){
-            for(Map.Entry<RequestMatcher, List<ConfigAttribute>> entry : requestMap.entrySet()){
+            for(Map.Entry<RequestMatcher, List<ConfigAttribute>> entry : requestMap.entrySet()){    // 사용자 정보와 매칭되는 정보를 가져옴
                 RequestMatcher matcher = entry.getKey();
-                if(matcher.matches(request)){
-                    return entry.getValue();
+                if(matcher.matches(request)){   // URL을 검사.
+                    return entry.getValue();    // 권한정보를 추출.
                 }
             }
         }
 
         return null;
     }
-
+    // 아래 getAllConfigAttributes() supports()는 FilterInvocationSecurityMetadataSource의 내용 그대로.
     @Override
     public Collection<ConfigAttribute> getAllConfigAttributes() {
         Set<ConfigAttribute> allAttributes = new HashSet<>();
