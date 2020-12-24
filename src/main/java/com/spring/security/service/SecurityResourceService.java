@@ -1,5 +1,6 @@
 package com.spring.security.service;
 
+import com.spring.security.domain.entity.AccessIp;
 import com.spring.security.domain.entity.Resources;
 import com.spring.security.repository.AccessIpRepository;
 import com.spring.security.repository.ResourcesRepository;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
-
+// 실제 DB로 부터 RequestMap<URL, ROLE> 형태를 가져오는 서비스 계층
 @Service
 public class SecurityResourceService {
 
@@ -25,15 +26,14 @@ public class SecurityResourceService {
         this.accessIpRepository = accessIpRepository;
     }
 
+    // 실제DB로 부터 RequestMap<URL, ROLE> 형태를 가져옴.
     public LinkedHashMap<RequestMatcher, List<ConfigAttribute>> getResourceList(){
 
         LinkedHashMap<RequestMatcher, List<ConfigAttribute>> result = new LinkedHashMap<>();
         List<Resources> resourcesList = resourcesRepository.findAllResources();
         resourcesList.forEach(re ->{
             List<ConfigAttribute> configAttributeList =  new ArrayList<>();
-            re.getRoleSet().forEach(role -> {
-                configAttributeList.add(new SecurityConfig(role.getRoleName()));
-            });
+            re.getRoleSet().forEach(role -> configAttributeList.add(new SecurityConfig(role.getRoleName())));
             result.put(new AntPathRequestMatcher(re.getResourceName()),configAttributeList);
 
         });
@@ -47,9 +47,7 @@ public class SecurityResourceService {
         resourcesList.forEach(re ->
                 {
                     List<ConfigAttribute> configAttributeList = new ArrayList<>();
-                    re.getRoleSet().forEach(ro -> {
-                        configAttributeList.add(new SecurityConfig(ro.getRoleName()));
-                    });
+                    re.getRoleSet().forEach(ro -> configAttributeList.add(new SecurityConfig(ro.getRoleName())));
                     result.put(re.getResourceName(), configAttributeList);
                 }
         );
@@ -63,9 +61,7 @@ public class SecurityResourceService {
         resourcesList.forEach(re ->
                 {
                     List<ConfigAttribute> configAttributeList = new ArrayList<>();
-                    re.getRoleSet().forEach(ro -> {
-                        configAttributeList.add(new SecurityConfig(ro.getRoleName()));
-                    });
+                    re.getRoleSet().forEach(ro -> configAttributeList.add(new SecurityConfig(ro.getRoleName())));
                     result.put(re.getResourceName(), configAttributeList);
                 }
         );
@@ -73,7 +69,6 @@ public class SecurityResourceService {
     }
 
     public List<String> getAccessIpList() {
-        List<String> accessIpList = accessIpRepository.findAll().stream().map(accessIp -> accessIp.getIpAddress()).collect(Collectors.toList());
-        return accessIpList;
+        return accessIpRepository.findAll().stream().map(AccessIp::getIpAddress).collect(Collectors.toList());
     }
 }

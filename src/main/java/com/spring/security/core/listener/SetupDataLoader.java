@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
-
+// DB 초기데이터 init하는 class
 @Component
 public class SetupDataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
