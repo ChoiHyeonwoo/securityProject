@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-
+// ROLE 간 관계를 정의하는 entity(ex] ROLE_USER < ROLE_MANAGER < ROLE_ADMIN)
 @Entity
 @Table(name="ROLE_HIERARCHY")
 @AllArgsConstructor

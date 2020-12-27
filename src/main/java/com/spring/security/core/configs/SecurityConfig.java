@@ -145,7 +145,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         RoleHierarchyVoter roleHierarchyVoter = new RoleHierarchyVoter(roleHierarchy());
         return roleHierarchyVoter;
     }
-
+    // ROLE 간의 관계를 적용한 로직을 적
     @Bean
     public RoleHierarchyImpl roleHierarchy() {
         RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();

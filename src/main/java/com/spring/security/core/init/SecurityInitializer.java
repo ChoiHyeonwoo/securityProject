@@ -6,7 +6,7 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.stereotype.Component;
-
+// application 시작 시 권한관계[계층]를 초기화함.
 @Component
 public class SecurityInitializer implements ApplicationRunner {
 

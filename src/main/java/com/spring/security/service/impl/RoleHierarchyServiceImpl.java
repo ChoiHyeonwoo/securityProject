@@ -18,7 +18,7 @@ public class RoleHierarchyServiceImpl implements RoleHierarchyService {
 
     @Transactional
     @Override
-    public String findAllHierarchy() {
+    public String findAllHierarchy() {      // ROLE 계층간의 상하관계를 formatting하는 함수.
 
         List<RoleHierarchy> rolesHierarchy = roleHierarchyRepository.findAll();
 
