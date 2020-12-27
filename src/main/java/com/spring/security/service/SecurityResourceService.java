@@ -67,7 +67,7 @@ public class SecurityResourceService {
         );
         return result;
     }
-
+    // access가능한 ip들을 모두 가져옴.
     public List<String> getAccessIpList() {
         return accessIpRepository.findAll().stream().map(AccessIp::getIpAddress).collect(Collectors.toList());
     }

@@ -4,7 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-
+// 접속 ip 관리하는 entity
 @Entity
 @Table(name = "ACCESS_IP")
 @Data

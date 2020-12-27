@@ -133,7 +133,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         RoleHierarchy childRoleHierarchy = roleHierarchyRepository.save(roleHierarchy);
         childRoleHierarchy.setParentName(parentRoleHierarchy);
     }
-
+    // 해당 아이피가 맞는 사용자만 처리.
     private void setupAccessIpData() {
 
         AccessIp byIpAddress = accessIpRepository.findByIpAddress("0:0:0:0:0:0:0:1");

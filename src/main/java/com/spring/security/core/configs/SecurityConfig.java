@@ -133,8 +133,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private List<AccessDecisionVoter<?>> getAccessDecisionVoters() {
 
         List<AccessDecisionVoter<? extends Object>> accessDecisionVoters = new ArrayList<>();
-//        accessDecisionVoters.add(new IpAddressVoter(securityResourceService));
-        accessDecisionVoters.add(roleVoter());
+//        accessDecisionVoters.add(new IpAddressVoter(securityResourceService)); -> ip 체크하는 voter까지 추가 (얘가 먼저 가야함.)
+        accessDecisionVoters.add(roleVoter());  // 권한 계층 관리하는 voter 추가
 
         return accessDecisionVoters;
     }
@@ -145,7 +145,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         RoleHierarchyVoter roleHierarchyVoter = new RoleHierarchyVoter(roleHierarchy());
         return roleHierarchyVoter;
     }
-    // ROLE 간의 관계를 적용한 로직을 적
+    // ROLE 간의 관계를 적용한 로직을 적용
     @Bean
     public RoleHierarchyImpl roleHierarchy() {
         RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
