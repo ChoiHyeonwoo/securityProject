@@ -56,13 +56,13 @@ public class UrlFilterInvocationSecurityMetadataSource implements FilterInvocati
     public boolean supports(Class<?> clazz) {
         return FilterInvocation.class.isAssignableFrom(clazz);
     }
-
+    // 관리자 화면에서 권한 추가 시 동적으로 requestMap에 저장 -> 권한을 실시간으로 추가 삭제 할 수 있다.
     public void reload(){
 
-        LinkedHashMap<RequestMatcher, List<ConfigAttribute>> reloadedMap = securityResourceService.getResourceList();
+        LinkedHashMap<RequestMatcher, List<ConfigAttribute>> reloadedMap = securityResourceService.getResourceList();   // DB에 저장된 requestMap형태를 다시 불러옴
         Iterator<Map.Entry<RequestMatcher, List<ConfigAttribute>>> iterator = reloadedMap.entrySet().iterator();
 
-        requestMap.clear();
+        requestMap.clear(); // 기존 requestMap 초기화
 
         while(iterator.hasNext()){
             Map.Entry<RequestMatcher, List<ConfigAttribute>> entry = iterator.next();

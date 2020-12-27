@@ -37,7 +37,7 @@ public class ResourcesController {
 	private MethodSecurityService methodSecurityService;
 
 	@Autowired
-	private UrlFilterInvocationSecurityMetadataSource filterInvocationSecurityMetadataSource;
+	private UrlFilterInvocationSecurityMetadataSource filterInvocationSecurityMetadataSource;	//resource를 실시간으로 반영할 수 있게끔
 
 	@GetMapping(value="/admin/resources")
 	public String getResources(Model model) throws Exception {
