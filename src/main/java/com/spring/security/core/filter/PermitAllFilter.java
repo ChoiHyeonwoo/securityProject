@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
+// permitall config를 custom
 public class PermitAllFilter extends FilterSecurityInterceptor {
 
     private static final String FILTER_APPLIED = "__spring_security_filterSecurityInterceptor_filterApplied";
@@ -25,7 +25,7 @@ public class PermitAllFilter extends FilterSecurityInterceptor {
             permitAllRequestMatchers.add(new AntPathRequestMatcher(resource));
         }
     }
-
+    // 인가처리 직전 permitAll 처리를 담당하는 함수.
     @Override
     protected InterceptorStatusToken beforeInvocation(Object object) {
 
@@ -37,14 +37,14 @@ public class PermitAllFilter extends FilterSecurityInterceptor {
                 break;
             }
         }
-
+        // permitAll일때! - null (null 리턴하면 인가 확인을 하지 않음.)
         if(permitAll){
             return null;
         }
 
         return super.beforeInvocation(object);
     }
-
+    // FilterSecurityInterceptor의 기본내용 그대로 가져옴.
     public void invoke(FilterInvocation fi) throws IOException, ServletException {
         if ((fi.getRequest() != null)
                 && (fi.getRequest().getAttribute(FILTER_APPLIED) != null)

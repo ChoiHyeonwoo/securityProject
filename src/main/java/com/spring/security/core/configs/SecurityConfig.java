@@ -50,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private SecurityResourceService securityResourceService;
 
-    private String[] permitAllResources = {"/", "/login", "/user/login/**"};
+    private String[] permitAllResources = {"/", "/login", "/user/login/**"};    //permitAll로 처리할 URL
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -106,7 +106,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         commonAccessDeniedHandler.setErrorPage("/denied");
         return commonAccessDeniedHandler;
     }
-
+    // permitall 기능 작동을 위한 커스텀 필터 설정
     @Bean
     public PermitAllFilter customFilterSecurityInterceptor() throws Exception {
 
