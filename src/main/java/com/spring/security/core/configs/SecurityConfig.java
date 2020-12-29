@@ -39,7 +39,7 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)   // Annotation 인가 체크방식 사용을 위한 설정
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)   // Annotation 인가(Method 보안허용) 체크방식 사용을 위한 설정
 @Slf4j
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
