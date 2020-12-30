@@ -7,44 +7,44 @@ import org.springframework.security.access.ConfigAttribute;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+// 초기화 시 Map<Method, List<ROLE>> 형태를 저장 및 관리.
+@Slf4j
+public class MethodResourcesMapFactoryBean implements FactoryBean<LinkedHashMap<String, List<ConfigAttribute>>> {
 
-    @Slf4j
-    public class MethodResourcesMapFactoryBean implements FactoryBean<LinkedHashMap<String, List<ConfigAttribute>>> {
+    private SecurityResourceService securityResourceService;
+    private String resourceType;
 
-        private SecurityResourceService securityResourceService;
-        private String resourceType;
+    public void setResourceType(String resourceType) {
+        this.resourceType = resourceType;
+    }
 
-        public void setResourceType(String resourceType) {
-            this.resourceType = resourceType;
-        }
+    public void setSecurityResourceService(SecurityResourceService securityResourceService) {
+        this.securityResourceService = securityResourceService;
+    }
 
-        public void setSecurityResourceService(SecurityResourceService securityResourceService) {
-            this.securityResourceService = securityResourceService;
-        }
+    private LinkedHashMap<String, List<ConfigAttribute>> resourcesMap;
 
-        private LinkedHashMap<String, List<ConfigAttribute>> resourcesMap;
-
-        public void init() {
-            if ("method".equals(resourceType)) {
-                resourcesMap = securityResourceService.getMethodResourceList();
-            }else if("pointcut".equals(resourceType)){
-                resourcesMap = securityResourceService.getPointcutResourceList();
-            }
-        }
-
-        public LinkedHashMap<String, List<ConfigAttribute>> getObject() {
-            if (resourcesMap == null) {
-                init();
-            }
-            return resourcesMap;
-        }
-
-        @SuppressWarnings("rawtypes")
-        public Class<LinkedHashMap> getObjectType() {
-            return LinkedHashMap.class;
-        }
-
-        public boolean isSingleton() {
-            return true;
+    public void init() {
+        if ("method".equals(resourceType)) {
+            resourcesMap = securityResourceService.getMethodResourceList();
+        }else if("pointcut".equals(resourceType)){
+            resourcesMap = securityResourceService.getPointcutResourceList();
         }
     }
+
+    public LinkedHashMap<String, List<ConfigAttribute>> getObject() {
+        if (resourcesMap == null) {
+            init();
+        }
+        return resourcesMap;
+    }
+
+    @SuppressWarnings("rawtypes")
+    public Class<LinkedHashMap> getObjectType() {
+        return LinkedHashMap.class;
+    }
+
+    public boolean isSingleton() {
+        return true;
+    }
+}

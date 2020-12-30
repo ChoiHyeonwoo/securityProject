@@ -13,14 +13,20 @@ import org.springframework.security.access.method.MapBasedMethodSecurityMetadata
 import org.springframework.security.access.method.MethodSecurityMetadataSource;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
-/// AOP 방식 (Method 보안 관련 설정만 따로 모아서) -> Map 기반
+/***
+ * AOP 방식 (Method 보안 관련 설정만 따로 모아서) -> Map 기반
+ */
 @Configuration
 @EnableGlobalMethodSecurity
 public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
 
     @Autowired
     private SecurityResourceService securityResourceService;
-    // Map기반으로의 보안처리를 가능하게 할 수 있게끔.
+
+    /**
+     * Map기반으로의 보안처리를 가능하게 할 수 있게끔.
+     * @return
+     */
     @Override
     protected MethodSecurityMetadataSource customMethodSecurityMetadataSource() {
         return mapBasedMethodSecurityMetadataSource();
@@ -31,6 +37,10 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
         return new MapBasedMethodSecurityMetadataSource(methodResourcesMapFactoryBean().getObject());
     }
 
+    /**
+     * Map<Method, List<ROLE>> 방식의 Factory를 Bean화
+     * @return
+     */
     @Bean
     public MethodResourcesMapFactoryBean methodResourcesMapFactoryBean(){
         MethodResourcesMapFactoryBean methodResourcesMapFactoryBean = new MethodResourcesMapFactoryBean();

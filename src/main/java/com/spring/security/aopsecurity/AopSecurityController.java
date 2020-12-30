@@ -21,8 +21,15 @@ public class AopSecurityController {
     @Autowired
     private AopLiveMethodService aopLiveMethodService ;
 
-    @GetMapping("/preAuthorize")    // URL 인가체크방식
-    @PreAuthorize("hasRole('ROLE_USER') and #account.username == principal.username")   // Annotation 기반 인가 체크방식
+    /**
+     * AOP URL 인가체크방식 적용된 controller (@PreAuthorize Annotation 기반 인가 체크방식)
+     * @param account
+     * @param model
+     * @param principal
+     * @return
+     */
+    @GetMapping("/preAuthorize")
+    @PreAuthorize("hasRole('ROLE_USER') and #account.username == principal.username")
     public String preAuthorize(AccountDto account, Model model, Principal principal){
 
         model.addAttribute("method", "Success @PreAuthorize");
@@ -31,6 +38,11 @@ public class AopSecurityController {
 
     }
 
+    /**
+     * Aop method 보안 방식 적옹된 Controller
+     * @param model
+     * @return
+     */
     @GetMapping("/methodSecured")
     public String methodSecured(Model model){
 

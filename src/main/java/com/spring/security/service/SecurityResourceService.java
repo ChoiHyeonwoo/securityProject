@@ -39,7 +39,7 @@ public class SecurityResourceService {
         });
         return result;
     }
-
+    // 실제DB로 부터 RequestMap<Method, ROLE> 형태를 가져옴.
     public LinkedHashMap<String, List<ConfigAttribute>> getMethodResourceList() {
 
         LinkedHashMap<String, List<ConfigAttribute>> result = new LinkedHashMap<>();
